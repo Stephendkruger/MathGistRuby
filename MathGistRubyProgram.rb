@@ -20,7 +20,8 @@
 #A complex example: "10 + 2 * 3 / 4" 
 #Returns: 11.5
 
-#Write your solution in Ruby, JavaScript, or CoffeeScript, without the use of eval or similar techniques.
+#Write your solution in Ruby, JavaScript, or CoffeeScript, without the use of eval
+# or similar techniques.
 
 #Please optimize for code readability and clarity. 
 #What would your solution look like if it was submitted to 
@@ -35,11 +36,28 @@ ARGV.each do|a|
   puts "Argument: #{a}"
 end
 
-def test(a1="Default")
+def stringEvaluator(a1="Default")
    puts "The method paramater was #{a1}"
    puts "Trying to pull one letter by index 2: #{a1[2]}"
-   puts a1.each(' ')
+   tokenizedStringArray = a1.split(' ')
+   puts tokenizedStringArray
+   TokenizedStringArrayEvaluator tokenizedStringArray
+
+
 end
 
-test ARGV[0]
-test
+def TokenizedStringArrayEvaluator(tokArray = "Default Array".split(' '))
+	operatorArray = Array.new
+
+	i = 1
+	cap = tokArray.length
+	while i < cap
+		operatorArray.push tokArray[i]
+		i = i + 2
+	end
+	puts operatorArray
+
+end
+#Wierdness, if I capitalize stringEvaluator it works with arguments, but not without
+stringEvaluator ARGV[0]
+stringEvaluator
