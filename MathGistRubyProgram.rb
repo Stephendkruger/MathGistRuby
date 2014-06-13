@@ -38,9 +38,10 @@ end
 
 def stringEvaluator(a1="Default")
    puts "The method paramater was #{a1}"
-   puts "Trying to pull one letter by index 2: #{a1[2]}"
+   puts " "
    tokenizedStringArray = a1.split(' ')
    puts tokenizedStringArray
+   puts " "
    TokenizedStringArrayEvaluator tokenizedStringArray
 
 
@@ -51,33 +52,75 @@ def TokenizedStringArrayEvaluator(tokArray = "Default Array".split(' '))
 	operatorPlusMinusArray = Array.new
 
 	i = 1
-	cap = tokArray.length
-	while i < cap
+	while i < tokArray.length
 		if ((tokArray[i] == "*") || (tokArray[i] == "/"))
-			puts tokArray[i]
+			#puts tokArray[i]
+			if (tokArray[i] == "*")
+				evaluation = tokArray[i-1].to_f * tokArray[i+1].to_f
+				tokArray.delete_at(i)
+				tokArray.insert(i, evaluation)
+				tokArray.delete_at(i+1)
+				tokArray.delete_at(i-1)
+				i = -1
+				puts tokArray
+				puts " "
+			else
+				evaluation = tokArray[i-1].to_f / tokArray[i+1].to_f
+				tokArray.delete_at(i)
+				tokArray.insert(i, evaluation)
+				tokArray.delete_at(i+1)
+				tokArray.delete_at(i-1)
+				i = -1
+				puts tokArray
+				puts " "
+			end
+		elsif ((tokArray[i] == "+") || (tokArray[i] == "-"))
+			#this just checks for valid tokens
 		else
-			puts "OTHER"
+			puts "Invalid Expression"
 		end			
 		#operatorArray.push tokArray[i]
 
 		i = i + 2
 	end
+
+	#Now it walks through evaluatiing plus and minus occurences left to right, 
+	#because all multiplaication and division has already been evaluated left to right 
 
 	i = 1
-	while i < cap
+	while i < tokArray.length
 		if ((tokArray[i] == "+") || (tokArray[i] == "-"))
-			puts tokArray[i]
+			#puts tokArray[i]
+			if (tokArray[i] == "+")
+				evaluation = tokArray[i-1].to_f + tokArray[i+1].to_f
+				tokArray.delete_at(i)
+				tokArray.insert(i, evaluation)
+				tokArray.delete_at(i+1)
+				tokArray.delete_at(i-1)
+				i = -1
+				puts tokArray
+				puts " "
+			else
+				evaluation = tokArray[i-1].to_f - tokArray[i+1].to_f
+				tokArray.delete_at(i)
+				tokArray.insert(i, evaluation)
+				tokArray.delete_at(i+1)
+				tokArray.delete_at(i-1)
+				i = -1
+				puts tokArray
+				puts " "
+			end
+		elsif ((tokArray[i] == "+") || (tokArray[i] == "-"))
+			#This just checks for valid tokes
 		else
-			puts "OTHER"
+			puts "Invalid Expression"
 		end			
 		#operatorArray.push tokArray[i]
 
 		i = i + 2
 	end
-	puts "multiplication indexes:"
-	puts operatorMultDivArray
-	puts "addition indexes:"
-	puts operatorPlusMinusArray
+	puts " "
+	puts tokArray
 
 end
 #Wierdness, if I capitalize stringEvaluator it works with arguments, but not without
