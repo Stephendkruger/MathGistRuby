@@ -47,15 +47,37 @@ def stringEvaluator(a1="Default")
 end
 
 def TokenizedStringArrayEvaluator(tokArray = "Default Array".split(' '))
-	operatorArray = Array.new
+	operatorMultDivArray = Array.new
+	operatorPlusMinusArray = Array.new
 
 	i = 1
 	cap = tokArray.length
 	while i < cap
-		operatorArray.push tokArray[i]
+		if ((tokArray[i] == "*") || (tokArray[i] == "/"))
+			puts tokArray[i]
+		else
+			puts "OTHER"
+		end			
+		#operatorArray.push tokArray[i]
+
 		i = i + 2
 	end
-	puts operatorArray
+
+	i = 1
+	while i < cap
+		if ((tokArray[i] == "+") || (tokArray[i] == "-"))
+			puts tokArray[i]
+		else
+			puts "OTHER"
+		end			
+		#operatorArray.push tokArray[i]
+
+		i = i + 2
+	end
+	puts "multiplication indexes:"
+	puts operatorMultDivArray
+	puts "addition indexes:"
+	puts operatorPlusMinusArray
 
 end
 #Wierdness, if I capitalize stringEvaluator it works with arguments, but not without
