@@ -42,7 +42,9 @@ ARGV.each do|a|
 end
 puts " "
 
-def stringEvaluator(inputString="Default Input")
+#inputString is the expression to be evaluated, and the second strign shows work
+# if you put in "Show Work" as it's value
+def stringEvaluator(inputString="Default Input", showWork="false")
 	#First we tokenize the string using split. We have been given that input will
 	#be valid, so we don't have to worry about strange inputs
 	tokArray = inputString.split(' ')
@@ -59,10 +61,17 @@ def stringEvaluator(inputString="Default Input")
    	#When we hit the operator we are looking for, it is evaluated and it's three tokens are
    	# replaced in the array by a single floating point value. Then the loop is reset and it
    	# looks through again, until all multiplication and division hes been evaluated.
+
+   	# if we want to see the evaluation step by step, we can pass in true as 
+   	# a second paramater
+   	if(showWork == "Show Work")
+   		print tokArray
+   		puts " "
+   	end
+
 	i = 1
 	while i < tokArray.length
 		if ((tokArray[i] == "*") || (tokArray[i] == "/"))
-			#puts tokArray[i]
 			if (tokArray[i] == "*")
 				evaluation = tokArray[i-1].to_f * tokArray[i+1].to_f
 				tokArray.delete_at(i)
@@ -70,8 +79,10 @@ def stringEvaluator(inputString="Default Input")
 				tokArray.delete_at(i+1)
 				tokArray.delete_at(i-1)
 				i = -1
-				#puts tokArray
-				#puts " "
+				if(showWork == "Show Work")
+   					print tokArray
+   					puts " "
+   				end
 			else
 				evaluation = tokArray[i-1].to_f / tokArray[i+1].to_f
 				tokArray.delete_at(i)
@@ -79,8 +90,10 @@ def stringEvaluator(inputString="Default Input")
 				tokArray.delete_at(i+1)
 				tokArray.delete_at(i-1)
 				i = -1
-				#puts tokArray
-				#puts " "
+				if(showWork == "Show Work")
+   					print tokArray
+   					puts " "
+   				end
 			end
 		elsif ((tokArray[i] == "+") || (tokArray[i] == "-"))
 			#this just checks for valid tokens
@@ -108,8 +121,10 @@ def stringEvaluator(inputString="Default Input")
 				tokArray.delete_at(i+1)
 				tokArray.delete_at(i-1)
 				i = -1
-				#puts tokArray
-				#puts " "
+				if(showWork == "Show Work")
+   					print tokArray
+   					puts " "
+   				end
 			else
 				evaluation = tokArray[i-1].to_f - tokArray[i+1].to_f
 				tokArray.delete_at(i)
@@ -117,21 +132,20 @@ def stringEvaluator(inputString="Default Input")
 				tokArray.delete_at(i+1)
 				tokArray.delete_at(i-1)
 				i = -1
-				#puts tokArray
-				#puts " "
+				if(showWork == "Show Work")
+   					print tokArray
+   					puts " "
+   				end
 			end
 		elsif ((tokArray[i] == "+") || (tokArray[i] == "-"))
 			#This just checks for valid tokes
 		else
 			return "Invalid Expression"
 		end			
-		#operatorArray.push tokArray[i]
 
-		i = i + 2
+		i = i + 2 # this skips us to next operator
 	end
-	#puts " "
-	#puts tokArray
-	#puts " "
+	
 	return tokArray[0]
 
 end
@@ -149,12 +163,12 @@ puts "Evaluate: 12 3 + 7"
 puts stringEvaluator "12 3 + 7"
 
 puts " "
-puts "Evaluate: 12 * 3 + 7 / 4 + 36 - 12 * -6"
-puts stringEvaluator "12 * 3 + 7 / 4 + 36 - 12 * -6"
+puts "Evaluate: 12 * 3 + 7 / 4 + 36 - 12 * -6, Show Work"
+puts stringEvaluator "12 * 3 + 7 / 4 + 36 - 12 * -6", "Show Work"
 
 puts " "
 puts "Evaluate: 3 + 7"
-puts stringEvaluator "3 + 7"
+puts stringEvaluator "3 + 7" 
 
 puts " "
 puts "Evaluate: 3 * 7"
