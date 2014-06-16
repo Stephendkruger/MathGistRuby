@@ -31,27 +31,33 @@
 
 #************** Solution Starts Here ***************
 
-#Order O( (n/2)^2 ) solution. Can be improved.
+#Order O( (n/2)^2 ) solution. Can be improved, but this will reduce readability. 
+#Will branch off a version with index counting instead of a iterative loop later.
 
 #Don't know how to write this into a gem yet. Will learn and implement if desired.
 
 #!/usr/bin/env ruby
 
-ARGV.each do|a|
-  puts "Argument: #{a}"
-end
-puts " "
 
-#inputString is the expression to be evaluated, and the second strign shows work
+
+#inputString is the expression to be evaluated, and the second string shows work
 # if you put in "Show Work" as it's value
 def stringEvaluator(inputString="Default Input", showWork="false")
 	#First we tokenize the string using split. We have been given that input will
 	#be valid, so we don't have to worry about strange inputs
 	tokArray = inputString.split(' ')
 
-	#puts "The method paramater was #{a1}"
-   	#puts " "
-   	#puts tokArray
+	#This code chunk deals with the edge case of a single number being fed in.
+	#I used a regular expression to catch versions of 0 since an invalid to_f returns 0.
+	if(tokArray.length ==1)
+		if( (tokArray[0] == "0") || (/\A[0]+.[0]+\Z/ =~ tokArray[0]) )
+			return 0.0
+		elsif (tokArray[0].to_f != 0.0)
+			return tokArray[0].to_f
+		else
+			return "Invalid Expression"	
+		end
+	end
 
    	#Now we walk through the token array by odd numbers so that we only hit the operators
    	#We can do this because input is stipulated as valid, and thuse will be multiples of 3
@@ -154,9 +160,34 @@ end
 
 #**************TESTBED FOLLOWS*******************
 
+ARGV.each do|a|
+  puts "Argument: #{a}"
+end
+puts " "
+
 puts "Input argument from running ruby file:"
 puts ARGV[0]
 puts stringEvaluator ARGV[0]
+
+puts " "
+puts "Evaluate: 000.00"
+puts stringEvaluator "000.00"
+
+puts " "
+puts "Evaluate: 0"
+puts stringEvaluator "0"
+
+puts " "
+puts "Evaluate: 0 / 7"
+puts stringEvaluator "0 / 7"
+
+puts " "
+puts "Evaluate: 7 / 0"
+puts stringEvaluator "7 / 0"
+
+puts " "
+puts "Evaluate: 0A0.00"
+puts stringEvaluator "0A0.00"
 
 puts " "
 puts "Evaluate: 12 3 + 7"
@@ -167,17 +198,17 @@ puts "Evaluate: 12 * 3 + 7 / 4 + 36 - 12 * -6, Show Work"
 puts stringEvaluator "12 * 3 + 7 / 4 + 36 - 12 * -6", "Show Work"
 
 puts " "
-puts "Evaluate: 3 + 7"
-puts stringEvaluator "3 + 7" 
+puts "Evaluate: 3.2 + 7"
+puts stringEvaluator "3.2 + 7" 
 
 puts " "
-puts "Evaluate: 3 * 7"
-puts stringEvaluator "3 * 7"
+puts "Evaluate: 3 * 7.7"
+puts stringEvaluator "3 * 7.7"
 
 puts " "
 puts "Evaluate: 3 - 7"
 puts stringEvaluator "3 - 7"
 
 puts " "
-puts "Evaluate: 3 / 7"
+puts "Evaluate: 3.6 / 7.2"
 puts stringEvaluator "3 / 7"
